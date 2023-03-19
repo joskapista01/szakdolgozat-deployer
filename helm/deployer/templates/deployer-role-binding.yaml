@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+# This role binding allows "jane" to read pods in the "default" namespace.
+# You need to already have a Role named "pod-reader" in that namespace.
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "deployer.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "deployer.labels" . | nindent 4 }}
+subjects:
+# You can specify more than one "subject"
+- kind: ServiceAccount
+  name: deployer
+  namespace: apps
+roleRef:
+  kind: ClusterRole
+  name: deployer
+  apiGroup: ""

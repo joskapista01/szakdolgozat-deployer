@@ -18,7 +18,7 @@ def createServer():
     if request.is_json:
         body = request.get_json()
         print(body)
-        os.system('helm install minecraft-server-'+body['serverId']+' ./charts/minecraft-server -n servers --set replicaCount=1' )
+        os.system('helm install minecraft-server-'+body['serverId']+' ./charts/minecraft-server -n servers --set replicaCount=1,fullnameOverride=minecraft-server-'+body['serverId'] )
         UpdateConfigMap(body['publicPort'], ('servers/minecraft-server-'+body['serverId']+':25565'))
         return {"msg": "success"}
     else:
