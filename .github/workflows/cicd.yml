@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: jozseftorocsik/szakdolgozat-deployer:latest
+          tags: jozseftorocsik/szakdolgozat-deployer:{{date 'YYYYMMDD'}}
       
       - uses: actions/checkout@master
       
