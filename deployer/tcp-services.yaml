@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  namespace: default
+data:
+  20000: "servers/minecraft-server-20000:25565"
+  20000: "servers/minecraft-server-20000:25565"
