@@ -28,7 +28,6 @@ jobs:
         with:
           push: true
           tags: jozseftorocsik/szakdolgozat-deployer
-          addTimestamp: true
       
       - uses: actions/checkout@master
       
