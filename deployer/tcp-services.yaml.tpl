@@ -2,5 +2,5 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: tcp-services
-  namespace: default
+  namespace: nginx-ingress
 data:
