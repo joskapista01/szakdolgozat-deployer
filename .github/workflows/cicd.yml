@@ -18,6 +18,7 @@ jobs:
         run: echo "::set-output name=id::$(date +%s)"
         
       - name: 'Save build id'
+        run: |
         env:
           BUILD_ID: ${{ steps.build_id.outputs.id }}
 
