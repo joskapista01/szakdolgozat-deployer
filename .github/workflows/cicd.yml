@@ -28,8 +28,6 @@ jobs:
       - uses: actions/checkout@master
         with:
           fetch-depth: 0
-          token: ${{ secrets.GIT_TOKEN }}
-          persist-credentials: false
       
       - name: 'Set build id'
         id: build_id
@@ -47,7 +45,7 @@ jobs:
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
-          github_token: ${{ secrets.GIT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: development
           
       - name: Merge development -> main
@@ -56,5 +54,5 @@ jobs:
           type: now
           from_branch: development
           target_branch: main
-          github_token: ${{ secrets.GIT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           
