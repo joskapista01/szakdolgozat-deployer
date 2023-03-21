@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: "jozseftorocsik/szakdolgozat-deployer:${{steps.build_id.outputs.id}}"
+          tags: "jozseftorocsik/szakdolgozat-deployer"
       
       - uses: actions/checkout@master
       
