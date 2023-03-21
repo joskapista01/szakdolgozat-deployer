@@ -37,13 +37,10 @@ jobs:
           persist-credentials: false
 
       
-      - name: Find and Replace
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          find: "buildVersion:*"
-          replace: "buildVersion: ${{steps.build_id.outputs.id}}"
-          include: "helm/deployer/values.yaml"
-          regex: true
+      - name: Update build number
+        run: |
+          sed -i "/buildVersion:*/c\buildVersion: ${{ steps.build_id.output.id }}" helm/deployer/values.yaml
+          cat helm/deployer/values.yaml
           
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
