@@ -40,10 +40,17 @@ jobs:
           include: "helm/deployer/values.yaml"
           regex: true
           
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          
       - name: Merge development -> main
         uses: devmasx/merge-branch@master
         with:
           type: now
           from_branch: development
           target_branch: main
-          github_token: ${{ secrets.GIT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
