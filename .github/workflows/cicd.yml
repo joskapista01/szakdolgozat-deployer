@@ -12,11 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 'Set build id'
-        id: build_id
-        # add a step output `steps.build_id.outputs.id` as the unique id
-        run: echo "::set-output name=id::$(date +%s)"
-
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -35,18 +30,29 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GIT_TOKEN }}
           persist-credentials: false
+      
+      - name: 'Set build id'
+        id: build_id
+        # add a step output `steps.build_id.outputs.id` as the unique id
+        run: echo "::set-output name=id::$(date +%s)"
+        
+      - name: 'Save build id'
+        run: |
+        env:
+          BUILD_ID: ${{ steps.build_id.outputs.id }}
 
       
       - name: Update build number
         run: |
-          sed -i "/buildVersion:*/c\buildVersion: ${{ steps.build_id.output.id }}" helm/deployer/values.yaml
+          echo $BUILD_ID
+          sed -i "/buildVersion:*/c\buildVersion: ${BUILD_ID}" helm/deployer/values.yaml
           cat helm/deployer/values.yaml
           
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+      - name: Commit & Push changes
+        uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GIT_TOKEN }}
-          branch: ${{ github.ref }}
+          branch: development
           
       - name: Merge development -> main
         uses: devmasx/merge-branch@master
