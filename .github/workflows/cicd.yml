@@ -24,7 +24,15 @@ jobs:
         with:
           push: true
           tags: "jozseftorocsik/szakdolgozat-deployer"
-      
+          
+      - name: Merge development -> main
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: development
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
       - uses: actions/checkout@master
         with:
           fetch-depth: 0
@@ -45,12 +53,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: development
-          
-      - name: Merge development -> main
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          from_branch: development
-          target_branch: main
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          
