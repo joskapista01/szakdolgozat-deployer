@@ -8,11 +8,10 @@ metadata:
   labels:
     {{- include "deployer.labels" . | nindent 4 }}
 subjects:
-# You can specify more than one "subject"
 - kind: ServiceAccount
-  name: deployer
-  namespace: apps
+  name: {{ include "deployer.fullname" . }}
+  namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: deployer
+  name: {{ include "deployer.fullname" . }}
   apiGroup: ""

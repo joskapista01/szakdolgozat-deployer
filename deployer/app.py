@@ -7,12 +7,14 @@ app = Flask(__name__)
 
 configMapName = "tcp-services.yaml"
 
+# Updates the tcp-configmap for the nginx-ingress controller with the new service
 def UpdateConfigMap(key, value):
     f = open(configMapName, "a")
     f.write("\n  " + str(key) + ": \""+ value + "\"")
     f.close()
     os.system("kubectl apply -f " + configMapName)
 
+# Http endpoint for creating servers
 @app.post("/")
 def createServer():
     if request.is_json:
@@ -24,6 +26,7 @@ def createServer():
     else:
         return {"error": "Request must be json!"}
 
+# Http endpoint for stopping/restarting servers
 @app.put("/")
 def updateServer():
     if request.is_json:
@@ -34,6 +37,7 @@ def updateServer():
     else:
         return {"error": "Request must be json!"}
 
+# Http endpoint for deleting server
 @app.delete("/")
 def deleteServer():
     if request.is_json:
